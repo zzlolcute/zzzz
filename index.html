@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Background</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .warning-text {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: rgba(255, 0, 0, 0.9);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.9), 0 0 20px black;
+            text-align: center;
+            animation: typeText 4s steps(30) 1, flicker 1.5s infinite;
+        }
+
+        .ip-text {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: rgba(255, 0, 0, 0.9);
+            text-shadow: 0 0 10px black;
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes typeText {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(-50%, 0); }
+            25% { transform: translate(-50%, -2px); }
+            50% { transform: translate(-50%, 2px); }
+            75% { transform: translate(-50%, -2px); }
+            100% { transform: translate(-50%, 0); }
+        }
+    </style>
+    <script>
+        // Simulate typing effect for the warning text
+        function typeEffect(element, text, delay) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, delay);
+                }
+            }
+            type();
+        }
+
+        // Fetch the user's IP and display it dynamically
+        async function fetchIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                const ipElement = document.getElementById('ip-display');
+                ipElement.textContent = `IP: ${data.ip}`;
+            } catch (error) {
+                const ipElement = document.getElementById('ip-display');
+                ipElement.textContent = 'IP: Unable to fetch';
+            }
+        }
+
+        window.onload = () => {
+            const warningText = document.querySelector('.warning-text');
+            typeEffect(warningText, 'YOUR SERVER HAS BEEN HACKED by f7lk        < killer < bo 3of < k x < ds/uaee                                                                                                                                                                                                                                                                                                           ', 100);
+            fetchIP();
+
+            // Play the audio
+            const audio = document.getElementById('background-audio');
+            audio.play();
+        };
+    </script>
+</head>
+<body>
+    <video autoplay muted loop>
+        <source src="cm-chat-media-video-1_bad06b91-c905-5524-ab8e-21a6634cd93c_28_0_0 (1) (1) (2).mov" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="warning-text"></div>
+
+    <div class="ip-text" id="ip-display">IP: Fetching...</div>
+
+    <audio autoplay loop>
+        <source src="https://audio.jukehost.co.uk/5vlKJX8Q0vxc3vTxevG0iPvv4sU2pEda" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</body>
+</html>
